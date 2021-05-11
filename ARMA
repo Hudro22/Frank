@@ -1,0 +1,27 @@
+X = dfw['PC'].values
+
+size = int(len(X) * 0.8)
+
+train, test = X[0:size], X[size:len(X)]
+
+history = [x for x in train]
+
+predictions = list()
+
+# walk-forward validation
+
+for t in range(len(test)):
+
+                model = ARIMA(history, order=(1,0,1))
+
+                model_fit = model.fit()
+
+                output = model_fit.forecast(maxiter=500, method= 'nm' )
+
+                yhat = output[0]
+
+                predictions.append(yhat)
+
+                obs = test[t]
+
+                history.append(obs)
